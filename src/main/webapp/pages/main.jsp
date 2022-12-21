@@ -7,10 +7,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head>
+    <title>Title</title>
+</head>
+<body>
+Welcome ${user} !
+<br/>
+<form action="controller" method="post">
+    <input type="hidden" name="command" value="logout"/>
+<input type="submit" name="button_logout" value="Logout"/>
+</form>
+</body>
 </html>

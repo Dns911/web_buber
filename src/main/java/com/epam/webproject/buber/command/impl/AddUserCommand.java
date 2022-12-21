@@ -1,6 +1,6 @@
-package com.example.demo333.command.impl;
+package com.epam.webproject.buber.command.impl;
 
-import com.example.demo333.command.Command;
+import com.epam.webproject.buber.command.Command;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class AddUserCommand implements Command {

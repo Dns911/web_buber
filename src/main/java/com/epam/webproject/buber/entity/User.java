@@ -1,2 +1,4 @@
-package com.epam.webproject.buber.entity;public class User {
+package com.epam.webproject.buber.entity;
+
+public class User extends AbstractEntity{
 }

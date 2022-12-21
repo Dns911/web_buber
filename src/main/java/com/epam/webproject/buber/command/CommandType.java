@@ -1,9 +1,9 @@
-package com.example.demo333.command;
+package com.epam.webproject.buber.command;
 
-import com.example.demo333.command.impl.AddUserCommand;
-import com.example.demo333.command.impl.DefaultCommand;
-import com.example.demo333.command.impl.LoginCommand;
-import com.example.demo333.command.impl.LogoutCommand;
+import com.epam.webproject.buber.command.impl.AddUserCommand;
+import com.epam.webproject.buber.command.impl.DefaultCommand;
+import com.epam.webproject.buber.command.impl.LoginCommand;
+import com.epam.webproject.buber.command.impl.LogoutCommand;
 
 public enum CommandType {
     ADD_USER(new AddUserCommand()),

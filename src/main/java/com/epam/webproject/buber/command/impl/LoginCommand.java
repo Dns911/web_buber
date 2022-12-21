@@ -1,8 +1,9 @@
-package com.example.demo333.command.impl;
+package com.epam.webproject.buber.command.impl;
 
-import com.example.demo333.command.Command;
-import com.example.demo333.service.UserService;
-import com.example.demo333.service.impl.UserServiceImpl;
+import com.epam.webproject.buber.command.Command;
+import com.epam.webproject.buber.controller.PagePath;
+import com.epam.webproject.buber.service.UserService;
+import com.epam.webproject.buber.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class LoginCommand implements Command {
@@ -14,10 +15,10 @@ public class LoginCommand implements Command {
         String page;
         if (userService.authenticate(login, password)){
             request.setAttribute("user", login);
-            page = "pages/main.jsp";
+            page = PagePath.MAIN;
         } else {
             request.setAttribute("login_msg", "incorrect login or pass");
-            page = "index.jsp";
+            page = PagePath.INDEX;
         }
         return page;
     }

@@ -1,4 +1,4 @@
-package com.epam.webproject.buber;
+package com.epam.webproject.buber.connection;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

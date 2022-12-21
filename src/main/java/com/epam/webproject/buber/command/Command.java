@@ -1,4 +1,4 @@
-package com.example.demo333.command;
+package com.epam.webproject.buber.command;
 
 import jakarta.servlet.http.HttpServletRequest;
 

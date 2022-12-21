@@ -1,4 +1,4 @@
-package com.example.demo333.service;
+package com.epam.webproject.buber.service;
 
 public interface UserService {
     boolean authenticate(String login, String password);

@@ -1,9 +1,12 @@
-package com.epam.webproject.buber;
+package com.epam.webproject.buber.connection;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,7 +21,7 @@ public class ConnectionPool {
     private static Lock locker = new ReentrantLock();
     private static ConnectionPool poolInstance;
     private static final int POOL_SIZE = 4;
-    private BlockingQueue<ProxyConnection> queue;
+    private BlockingQueue<ProxyConnection> queue = new LinkedBlockingQueue<>();
 
     static {
         try {
@@ -29,26 +32,28 @@ public class ConnectionPool {
     }
 
     private ConnectionPool() {
-        String url = "jdbc:mysql://localhost:3306/buber_db";
-        Properties prop = new Properties();
-        prop.put("user", "root");
-        prop.put("password", "Den_6394264");
-        prop.put("autoReconnect", "true");
-        prop.put("characterEncoding", "UTF-8");
-        prop.put("useUnicode", "true");
-        prop.put("useSSL", "true");
-        prop.put("useJDBCCompliantTimezoneShift", "true");
-        prop.put("useLegacyDatetimeCode", "false");
-        prop.put("serverTimezone", "UTC");
-        prop.put("serverSslCert", "classpath:server.crt");
-        this.queue = new LinkedBlockingQueue<>();
-        for (int i = 0; i < POOL_SIZE; i++) {
-            try {
-                queue.offer(new ProxyConnection(DriverManager.getConnection(url, prop)));
-            } catch (SQLException e) {
-                logger.log(Level.ERROR, "Get connection exception {}", e.getErrorCode());
+
+        try  {
+            String url = "jdbc:mysql://localhost:3306/buber_db";
+            Properties prop = new Properties();
+            prop.put("user", "root");
+            prop.put("password", "Den_6394264");
+
+
+            this.queue = new LinkedBlockingQueue<>();
+            for (int i = 0; i < POOL_SIZE; i++) {
+                try {
+                    queue.offer(new ProxyConnection(DriverManager.getConnection(url, prop)));
+                } catch (SQLException e) {
+                    logger.log(Level.ERROR, "Get connection exception {}", e.getErrorCode());
+                }
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+
     }
 
     public static ConnectionPool getInstance() {
@@ -68,7 +73,7 @@ public class ConnectionPool {
     public ProxyConnection getConnection() {
         ProxyConnection connection = null;
         try {
-            connection = queue.take();
+            connection = this.queue.take();
         } catch (InterruptedException e) {
             logger.log(Level.ERROR, "Get connection exception: {}", e.getMessage());
         }
